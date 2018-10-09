@@ -1,79 +1,121 @@
-const LOG_IN = {
+import PropTypes from 'prop-types';
+
+export const STATUS_CODES = [200, 404, 505]; // or any other error
+
+export const SIGN_UP = {
+  type: 'POST:multipart/form-data',
+  url: '/signup',
+  req: { // ?type=val1&email=val2
+    type: PropTypes.oneOf(['provider', 'client']).isRequired,
+    email: PropTypes.string.isRequired,
+    phone: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    photo: PropTypes.instanceOf(Blob).isRequired, // <input type="file" name="photo">
+  },
+  res: {
+    id: PropTypes.string.isRequired,
+    type: PropTypes.oneOf(['provider', 'client']).isRequired,
+    email: PropTypes.string.isRequired,
+    phone: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    photo: PropTypes.string.isRequired,
+  },
+  requireCredentials: false,
+};
+
+export const LOG_IN = {
   type: 'POST',
   url: '/login',
   req: {
-    username,
-    password,
+    email: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
   },
   res: {
-    type: 'provider', // Indicates what type of user it is
-    username,
-    email,
-    phone,
-    name,
-    photo,
+    id: PropTypes.string.isRequired,
+    type: PropTypes.oneOf(['provider', 'client']).isRequired,
+    email: PropTypes.string.isRequired,
+    phone: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    photo: PropTypes.string.isRequired,
   },
+  requireCredentials: false,
 };
 
-const LOG_OUT = {
+export const LOG_OUT = { // i.e. destroy current session
   type: 'DELETE',
   url: '/logout',
-  res: STATUS_CODE,
+  res: PropTypes.oneOf(STATUS_CODES).isRequired,
+  requireCredentials: true,
 };
 
-
-const GET_PROFILE = {
+export const GET_PROFILE = {
   type: 'GET',
-  url: '/provider/:username',
+  url: '/provider/:userId',
   res: {
-    username,
-    email,
-    phone,
-    name,
-    photo,
+    id: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    phone: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    photo: PropTypes.string.isRequired,
   },
+  requireCredentials: false,
 };
 
-const UPDATE_INFO = {
+export const UPDATE_INFO = {
   type: 'POST',
-  url: '/provider/:username/update',
+  url: '/provider/:userId/update', // userId should match session
   req: {
-    username,
-    email,
-    phone,
-    name,
+    email: PropTypes.string.isRequired,
+    phone: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
   },
   res: {
-    username,
-    email,
-    phone,
-    name,
+    email: PropTypes.string.isRequired,
+    phone: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
   },
+  requireCredentials: true,
 };
 
-const UPDATE_PHOTO = {
+export const UPDATE_PHOTO = {
   type: 'POST:multipart/form-data',
-  url: '/provider/:username/photo/update',
+  url: '/provider/:userId/photo/update', // userId should match session
   req: {
-    photo,
+    photo: PropTypes.instanceOf(Blob).isRequired,
   },
   res: {
-    photo,
+    photo: PropTypes.string.isRequired,
   },
+  requireCredentials: true,
 };
 
-const UPDATE_PASSWORD = {
+export const UPDATE_PASSWORD = {
   type: 'POST',
-  url: '/provider/:username/password/update',
+  url: '/provider/:userId/password/update', // userId should match session
   req: {
-    oldPassword,
-    newPassword,
+    oldPassword: PropTypes.string.isRequired,
+    newPassword: PropTypes.string.isRequired,
   },
-  res: STATUS_CODE,
+  res: PropTypes.oneOf(STATUS_CODES).isRequired,
+  requireCredentials: true,
 };
 
-const DELETE = {
+export const DELETE = {
   type: 'DELETE',
-  url: '/provider/:username/delete',
-  res: STATUS_CODE,
+  url: '/provider/:userId/delete', // userId should match session
+  res: PropTypes.oneOf(STATUS_CODES).isRequired,
+  requireCredentials: true,
+};
+
+export const GET_QUEUES = {
+  type: 'GET',
+  url: '/provider/:userId/queues',
+  res: PropTypes.arrayOf({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    photo: PropTypes.string.isRequired,
+    closed: PropTypes.bool.isRequired,
+  }),
+  requireCredentials: false,
 };
