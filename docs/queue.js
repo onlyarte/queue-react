@@ -4,100 +4,90 @@ const GET_QUEUE_BY_ID = {
   type: 'GET',
   url: '/queue/:id',
   res: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    queueId: PropTypes.string.isRequired,
+    prividerId: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    photo: PropTypes.string.isRequired,
+    address: PropTypes.string.isRequired,
+    phoneNumber: PropTypes.string.isRequired,
     closed: PropTypes.bool.isRequired,
-
-    /*  Number of accepted future appointments. */
-    numberOfAppointments: PropTypes.number.isRequired,
-
-    /*  Date of the closest accepted appointment from now.
-        Any string accepted by JS Date.parse().
-        E.g. "Thu, 18 Oct 2018 17:35:18 GMT". */
-    nextAppointment: PropTypes.string,
-
-    /*  The closests date available for booking. */
-    nextAvailable: PropTypes.string,
+    futureAppointmentsAmount: PropTypes.number.isRequired,
+    nextApprovedAppointmentDate: PropTypes.string,
+    nextAvailableAppointmentDate: PropTypes.string,
+    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
   }),
-};
-
-const GET_QUEUES_BY_PROVIDER = {
-  type: 'GET',
-  url: '/provider/:providerId/queues',
-  res: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    photo: PropTypes.string.isRequired,
-    closed: PropTypes.bool.isRequired,
-    numberOfAppointments: PropTypes.number.isRequired,
-    nextAppointment: PropTypes.string,
-    nextAvailable: PropTypes.string,
-  })),
 };
 
 const CREATE_QUEUE = {
-  type: 'POST:multipart/form-data',
-  url: '/queue/new',
+  type: 'POST',
+  url: '/queue',
   req: PropTypes.shape({
+    providerId: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-
-    /*  As if it was submitted by HTML <input type="file" name="photo">. */
-    photo: PropTypes.instanceOf(Blob).isRequired,
+    address: PropTypes.string.isRequired,
+    phoneNumber: PropTypes.string.isRequired,
+    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
   }),
   res: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    queueId: PropTypes.string.isRequired,
+    providerId: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    photo: PropTypes.string.isRequired,
+    address: PropTypes.string.isRequired,
+    phoneNumber: PropTypes.string.isRequired,
     closed: PropTypes.bool.isRequired,
-    numberOfAppointments: PropTypes.number.isRequired,
-    nextAppointment: PropTypes.string,
-    nextAvailable: PropTypes.string,
+    futureAppointmentsAmount: PropTypes.number.isRequired,
+    nextApprovedAppointmentDate: PropTypes.string,
+    nextAvailableAppointmentDate: PropTypes.string,
+    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
   }),
   requireCredentials: true,
 };
 
 const UPDATE_INFO = {
-  type: 'PUT',
-  url: '/queue/:id/update',
+  type: 'PATCH',
+  url: '/queue/:id',
   req: PropTypes.shape({
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
+    address: PropTypes.string.isRequired,
+    phoneNumber: PropTypes.string.isRequired,
+    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
   }),
   res: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    queueId: PropTypes.string.isRequired,
+    providerId: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    photo: PropTypes.string.isRequired,
+    address: PropTypes.string.isRequired,
+    phoneNumber: PropTypes.string.isRequired,
     closed: PropTypes.bool.isRequired,
-    numberOfAppointments: PropTypes.number.isRequired,
-    nextAppointment: PropTypes.string,
-    nextAvailable: PropTypes.string,
+    futureAppointmentsAmount: PropTypes.number.isRequired,
+    nextApprovedAppointmentDate: PropTypes.string,
+    nextAvailableAppointmentDate: PropTypes.string,
+    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
   }),
   requireCredentials: true,
 };
 
 /*  If a queue is closed, no requests can be sent.
     Accepted future appointments are still eligible. */
-const SWITCH_CLOSED = {
-  type: 'PUT',
-  url: '/queue/:id/closed/update',
-  req: {
-    closed: true,
-  },
+const TOGGLE_CLOSED = {
+  type: 'PATCH',
+  url: '/queue/:id/closed',
   res: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    queueId: PropTypes.string.isRequired,
+    providerId: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    photo: PropTypes.string.isRequired,
+    address: PropTypes.string.isRequired,
+    phoneNumber: PropTypes.string.isRequired,
     closed: PropTypes.bool.isRequired,
-    numberOfAppointments: PropTypes.number.isRequired,
-    nextAppointment: PropTypes.string,
-    nextAvailable: PropTypes.string,
+    futureAppointmentsAmount: PropTypes.number.isRequired,
+    nextApprovedAppointmentDate: PropTypes.string,
+    nextAvailableAppointmentDate: PropTypes.string,
+    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
   }),
   requireCredentials: true,
 };
@@ -105,11 +95,40 @@ const SWITCH_CLOSED = {
 /*  Deny if there is at least one accepted future appointment. */
 const DELETE_QUEUE = {
   type: 'DELETE',
-  url: '/queue/:id/delete',
+  url: '/queue/:id',
   res: PropTypes.number.isRequired, // status code
   requireCredentials: true,
 };
 
-const GET_QUEUE_TIMESLOTS = {
+const CREATE_APPOINTMENTS = {
+  type: 'POST',
+  url: '/queue/:id/appointments',
+  req: PropTypes.arrayOf(PropTypes.shape({
+    ranges: PropTypes.arrayOf(PropTypes.shape({
+      dateTimeFrom: PropTypes.string.isRequired,
+      dateTimeTo: PropTypes.string.isRequired,
+      period: PropTypes.number,
+    })).isRequired,
+  })).isRequired,
+  res: PropTypes.number.isRequired, // status code
+  requireCredentials: true,
+};
 
+const GET_APPOINTMENTS_BY_QUEUE = {
+  type: 'GET',
+  url: '/queue/:id/appointments/status/:status',
+  res: PropTypes.arrayOf(PropTypes.shape({
+    appointmentId: PropTypes.string.isRequired,
+    client: PropTypes.shape({
+      userId: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired,
+      phoneNumber: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      photo: PropTypes.string.isRequired,
+    }).isRequired,
+    dateTimeFrom: PropTypes.string.isRequired,
+    dateTimeTo: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+  })).isRequired,
+  requireCredentials: true,
 };

@@ -4,17 +4,16 @@ const SIGN_UP = {
   type: 'POST:multipart/form-data',
   url: '/signup',
   req: PropTypes.shape({ // ?type=val1&email=val2&...
-    type: PropTypes.oneOf(['provider', 'client']).isRequired,
     email: PropTypes.string.isRequired,
-    phone: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
+    phoneNumber: PropTypes.string.isRequired,
     photo: PropTypes.instanceOf(Blob).isRequired, // <input type="file" name="photo">
   }),
   res: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    type: PropTypes.oneOf(['provider', 'client']).isRequired,
+    userId: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
-    phone: PropTypes.string.isRequired,
+    phoneNumber: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     photo: PropTypes.string.isRequired,
   }),
@@ -29,10 +28,9 @@ const LOG_IN = {
     password: PropTypes.string.isRequired,
   },
   res: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    type: PropTypes.oneOf(['provider', 'client']).isRequired,
+    userId: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
-    phone: PropTypes.string.isRequired,
+    phoneNumber: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     photo: PropTypes.string.isRequired,
   }),
@@ -50,9 +48,9 @@ const GET_PROFILE = {
   type: 'GET',
   url: '/user/:userId',
   res: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    userId: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
-    phone: PropTypes.string.isRequired,
+    phoneNumber: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     photo: PropTypes.string.isRequired,
   }),
@@ -60,36 +58,27 @@ const GET_PROFILE = {
 };
 
 const UPDATE_INFO = {
-  type: 'PUT',
-  url: '/user/:userId/update', // userId should match session
+  type: 'PATCH',
+  url: '/user/:userId', // userId should match session
   req: PropTypes.shape({
     email: PropTypes.string.isRequired,
-    phone: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-  }),
-  res: PropTypes.shape({
-    email: PropTypes.string.isRequired,
-    phone: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-  }),
-  requireCredentials: true,
-};
-
-const UPDATE_PHOTO = {
-  type: 'PUT:multipart/form-data',
-  url: '/user/:userId/photo/update', // userId should match session
-  req: PropTypes.shape({
+    phoneNumber: PropTypes.string.isRequired,
     photo: PropTypes.instanceOf(Blob).isRequired,
   }),
   res: PropTypes.shape({
+    userId: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    phoneNumber: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     photo: PropTypes.string.isRequired,
   }),
   requireCredentials: true,
 };
 
 const UPDATE_PASSWORD = {
-  type: 'PUT',
-  url: '/user/:userId/password/update', // userId should match session
+  type: 'PATCH',
+  url: '/user/:userId/password', // userId should match session
   req: PropTypes.shape({
     oldPassword: PropTypes.string.isRequired,
     newPassword: PropTypes.string.isRequired,
@@ -100,7 +89,47 @@ const UPDATE_PASSWORD = {
 
 const DELETE = {
   type: 'DELETE',
-  url: '/user/:userId/delete', // userId should match session
+  url: '/user/:userId', // userId should match session
   res: PropTypes.number.isRequired, // status code
   requireCredentials: true,
 };
+
+const GET_QUEUES_BY_PROVIDER = {
+  type: 'GET',
+  url: '/user/:providerId/queues',
+  res: PropTypes.arrayOf(PropTypes.shape({ 
+    queueId: PropTypes.string.isRequired,
+    providerId: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    closed: PropTypes.bool.isRequired,
+    futureAppointmentsAmount: PropTypes.number.isRequired,
+    nextApprovedAppointmentDate: PropTypes.string,
+    nextAvailableAppointmentDate: PropTypes.string,
+    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+  })),
+};
+
+const GET_APPOINTMENTS_BY_CLIENT = {
+  type: 'GET',
+  url: '/user/:clientId/appointments/status/:status',
+  res: PropTypes.arrayOf(PropTypes.shape({
+    appointmentId: PropTypes.string.isRequired,
+    queue: PropTypes.shape({
+      queueId: PropTypes.string.isRequired,
+      providerId: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      address: PropTypes.string.isRequired,
+      phoneNumber: PropTypes.string.isRequired,
+      closed: PropTypes.bool.isRequired,
+      futureAppointmentsAmount: PropTypes.number.isRequired,
+      nextApprovedAppointmentDate: PropTypes.string,
+      nextAvailableAppointmentDate: PropTypes.string,
+    }).isRequired,
+    dateTimeFrom: PropTypes.string.isRequired,
+    dateTimeTo: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+  })).isRequired,
+  requireCredentials: true,
+}
