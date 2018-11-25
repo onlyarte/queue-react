@@ -37,4 +37,3 @@ const SEARCH_BY_PROVIDER = {
     photo: PropTypes.string.isRequired,
   })),
 };
-

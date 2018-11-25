@@ -1,0 +1,34 @@
+.hp-container {
+  position: relative;
+  overflow: hidden;
+  background-color: black;
+}
+
+.hp-container,
+.hp-front {
+  height: calc(100vh - 56px);
+  width: 100vw;
+}
+
+.hp-back {
+  position: absolute;
+  top: -5vh;
+  left: -2.5vw;
+  width: 105vw;
+  height: 110vh;
+  filter: blur(5px);
+  background-size: cover;
+  background-position: center center;
+  opacity: 0.5;
+  background-image: url('/images/hp-background-2.jpg')
+}
+
+.hp-front {
+  position: absolute;
+  z-index: 1;
+}
+
+.hp-front-header {
+  background-color: #007bff;
+  color: white;
+}
