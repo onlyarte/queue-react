@@ -1,16 +1,16 @@
-.hp-container {
+.hp-search {
   position: relative;
   overflow: hidden;
   background-color: black;
 }
 
-.hp-container,
-.hp-front {
-  height: calc(100vh - 56px);
+.hp-search,
+.hp-search-front {
+  height: 100vh;
   width: 100vw;
 }
 
-.hp-back {
+.hp-search-back {
   position: absolute;
   top: -5vh;
   left: -2.5vw;
@@ -19,16 +19,19 @@
   filter: blur(5px);
   background-size: cover;
   background-position: center center;
-  opacity: 0.5;
+  opacity: 0.2;
   background-image: url('/images/hp-background-2.jpg')
 }
 
-.hp-front {
+.hp-search-front {
   position: absolute;
   z-index: 1;
 }
 
-.hp-front-header {
-  background-color: #007bff;
-  color: white;
+.text-poiret {
+  font-family: 'Poiret One', cursive;
+}
+
+.hp-login {
+  height: 100vh;
 }

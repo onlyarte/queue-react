@@ -38,16 +38,19 @@ class Header extends Component {
     const { isOpen } = this.state;
 
     return (
-      <Navbar color="light" light expand="md">
-        <NavbarBrand href="/">QUEUE</NavbarBrand>
+      <Navbar color="light" light expand="md" fixed="top">
+        <NavbarBrand href="/" className="text-poiret">QUEUE</NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={isOpen} navbar className="justify-content-between">
           <Nav navbar>
             <NavItem>
-              <NavLink href="/queues/">Черги</NavLink>
+              <NavLink href="/#search">Шукати</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/appointments/">Зустрічі</NavLink>
+              <NavLink href="/queues/">Мої черги</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/appointments/">Мої зустрічі</NavLink>
             </NavItem>
           </Nav>
 
