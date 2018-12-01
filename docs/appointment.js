@@ -17,21 +17,21 @@ const DELETE_APPOINTMENT = {
 
 const REQUEST_APPOINTMENT = {
   type: 'PATCH',
-  url: '/appointment/:id/client/:clientId/status/requested',
+  url: '/appointment/:id/request?client=clientId',
   res: PropTypes.number.isRequired, // status code
   requireCredentials: true,
 };
 
 const APPROVE_APPOINTMENT = {
   type: 'PATCH',
-  url: '/appointment/:id/status/approve',
+  url: '/appointment/:id/approve',
   res: PropTypes.number.isRequired, // status code
   requireCredentials: true,
 };
 
 const CANCEL_APPOINTMENT = {
   type: 'PATCH',
-  url: '/appointment/:id/status/canceled',
+  url: '/appointment/:id/cancel',
   res: PropTypes.number.isRequired, // status code
   requireCredentials: true,
 };

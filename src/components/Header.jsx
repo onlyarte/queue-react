@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 
 import {
   Collapse,
@@ -15,7 +17,10 @@ import {
   DropdownItem,
 } from 'reactstrap';
 
-import Octicon, { Person as PersonIcon } from '@githubprimer/octicons-react';
+import Octicon, {
+  Person as PersonIcon,
+  SignIn as SignInIcon,
+} from '@githubprimer/octicons-react';
 
 class Header extends Component {
   constructor(props) {
@@ -39,18 +44,18 @@ class Header extends Component {
 
     return (
       <Navbar color="light" light expand="md" fixed="top">
-        <NavbarBrand href="/" className="text-poiret">QUEUE</NavbarBrand>
+        <NavbarBrand tag={Link} to="/" className="text-poiret">QUEUE</NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={isOpen} navbar className="justify-content-between">
           <Nav navbar>
             <NavItem>
-              <NavLink href="/#search">Шукати</NavLink>
+              <NavLink tag={Link} to="/#search">Шукати</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/queues/">Мої черги</NavLink>
+              <NavLink tag={Link} to="/queues">Мої черги</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/appointments/">Мої зустрічі</NavLink>
+              <NavLink tag={Link} to="/appointments">Мої зустрічі</NavLink>
             </NavItem>
           </Nav>
 
@@ -75,8 +80,8 @@ class Header extends Component {
 
           <Nav navbar>
             <NavItem>
-              <NavLink href="/#login">
-                <Octicon><PersonIcon x={10} /></Octicon>
+              <NavLink tag={HashLink} to="/#login">
+                <Octicon><SignInIcon x={10} /></Octicon>
                 {' '}
                 УВІЙТИ
               </NavLink>

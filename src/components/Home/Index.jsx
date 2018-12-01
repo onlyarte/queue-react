@@ -3,10 +3,10 @@ import { Col } from 'reactstrap';
 import SearchForm from './SearchForm';
 import LogInForm from './LogInForm';
 
-function HomePage() {
+function Home() {
   return (
     <Fragment>
-      <div className="hp-search">
+      <div className="hp-search" id="search">
         <div className="hp-search-back">
           <iframe
             title="youtube-background"
@@ -42,4 +42,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default Home;

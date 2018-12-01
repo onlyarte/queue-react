@@ -16,5 +16,6 @@ module.exports = {
   },
   rules: {
     strict: 'error',
+    'react/jsx-filename-extension': 'off',
   },
 };
