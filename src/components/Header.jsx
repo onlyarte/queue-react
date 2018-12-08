@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
@@ -49,14 +49,18 @@ class Header extends Component {
         <Collapse isOpen={isOpen} navbar className="justify-content-between">
           <Nav navbar>
             <NavItem>
-              <NavLink tag={Link} to="/#search">Шукати</NavLink>
+              <NavLink tag={HashLink} to="/#search">Шукати</NavLink>
             </NavItem>
-            <NavItem>
-              <NavLink tag={Link} to="/queues">Мої черги</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink tag={Link} to="/appointments">Мої зустрічі</NavLink>
-            </NavItem>
+            {user && (
+              <Fragment>
+                <NavItem>
+                  <NavLink tag={Link} to="/queues">Мої черги</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink tag={Link} to="/appointments">Мої зустрічі</NavLink>
+                </NavItem>
+              </Fragment>
+            )}
           </Nav>
 
           {user && (

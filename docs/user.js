@@ -33,6 +33,7 @@ const LOG_IN = {
     phoneNumber: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     photo: PropTypes.string.isRequired,
+    address: PropTypes.string.isRequired,
   }),
   requireCredentials: false,
 };
@@ -132,4 +133,4 @@ const GET_APPOINTMENTS_BY_CLIENT = {
     status: PropTypes.string.isRequired,
   })).isRequired,
   requireCredentials: true,
-}
+};

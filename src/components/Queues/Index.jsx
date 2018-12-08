@@ -29,8 +29,6 @@ class Queues extends Component {
 
   fetchQueues() {
     this.setState({ loading: true });
-
-    
   }
 
   render() {

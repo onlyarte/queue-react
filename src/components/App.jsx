@@ -9,6 +9,8 @@ import Queues from './Queues/Index';
 
 import Footer from './Footer';
 
+import UserContext from './UserContext';
+
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -26,21 +28,26 @@ class App extends Component {
   }
 
   render() {
+    const { user } = this.state;
+
     return (
       <Router>
-        <Fragment>
-          <Header />
+        <UserContext.Provider value={user}>
+          <Header user={user} />
 
-          <Route
-            exact
-            path="/"
-            component={props => <Home onUserChange={this.handleUserChange} {...props} />}
-          />
+          <main className="mt-5">
+            <Route
+              exact
+              path="/"
+              component={props => <Home onUserChange={this.handleUserChange} {...props} />}
+            />
 
-          <Route path="/queues" component={Queues} />
-          <Route path="/appointments" component={Appointments} />
+            <Route path="/queues" component={Queues} />
+            <Route path="/appointments" component={Appointments} />
+          </main>
+
           <Footer />
-        </Fragment>
+        </UserContext.Provider>
       </Router>
     );
   }

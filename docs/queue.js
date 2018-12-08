@@ -5,7 +5,7 @@ const GET_QUEUE_BY_ID = {
   url: '/queue/:id',
   res: PropTypes.shape({
     queueId: PropTypes.string.isRequired,
-    prividerId: PropTypes.string.isRequired,
+    providerId: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     address: PropTypes.string.isRequired,
@@ -71,27 +71,6 @@ const UPDATE_INFO = {
   requireCredentials: true,
 };
 
-/*  If a queue is closed, no requests can be sent.
-    Accepted future appointments are still eligible. */
-const TOGGLE_CLOSED = {
-  type: 'PATCH',
-  url: '/queue/:id/closed',
-  res: PropTypes.shape({
-    queueId: PropTypes.string.isRequired,
-    providerId: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    address: PropTypes.string.isRequired,
-    phoneNumber: PropTypes.string.isRequired,
-    closed: PropTypes.bool.isRequired,
-    futureAppointmentsAmount: PropTypes.number.isRequired,
-    nextApprovedAppointmentDate: PropTypes.string,
-    nextAvailableAppointmentDate: PropTypes.string,
-    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
-  }),
-  requireCredentials: true,
-};
-
 /*  Deny if there is at least one accepted future appointment. */
 const DELETE_QUEUE = {
   type: 'DELETE',
@@ -119,6 +98,7 @@ const GET_APPOINTMENTS_BY_QUEUE = {
   url: '/queue/:id/appointments/status/:status',
   res: PropTypes.arrayOf(PropTypes.shape({
     appointmentId: PropTypes.string.isRequired,
+    queueId: PropTypes.string.isRequired,
     client: PropTypes.shape({
       userId: PropTypes.string.isRequired,
       email: PropTypes.string.isRequired,
