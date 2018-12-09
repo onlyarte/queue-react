@@ -17,7 +17,10 @@ const DELETE_APPOINTMENT = {
 
 const REQUEST_APPOINTMENT = {
   type: 'PATCH',
-  url: '/appointment/:id/request?client=clientId',
+  url: '/appointment/:id/request',
+  req: PropTypes.shape({
+    clientId: PropTypes.string,
+  }),
   res: PropTypes.number.isRequired, // status code
   requireCredentials: true,
 };

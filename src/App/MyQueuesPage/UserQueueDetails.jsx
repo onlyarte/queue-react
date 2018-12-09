@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import moment from 'moment';
+import Moment from 'moment';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
+import { Button, ButtonGroup } from 'reactstrap';
+import CreateSlotsModal from './CreateSlotsModal';
 
 class UserQueueDetails extends Component {
   constructor(props) {
@@ -11,10 +13,12 @@ class UserQueueDetails extends Component {
 
     this.fetchQueue = this.fetchQueue.bind(this);
     this.fetchAppointments = this.fetchAppointments.bind(this);
+    this.toggleCreateSlotsModal = this.toggleCreateSlotsModal.bind(this);
 
     this.state = {
       queue: null,
       appointments: [],
+      isCreateSlotsModalOpen: false,
     };
   }
 
@@ -36,46 +40,78 @@ class UserQueueDetails extends Component {
 
     axios.get(`http://localhost:8080/v1/queue/${queueId}`)
       .then(({ data: queue }) => this.setState({ queue }))
-      .catch(error => console.log(error));
+      .catch((error) => {
+        this.setState({ queue: null });
+        console.log(error);
+      });
   }
 
   fetchAppointments() {
     const { queueId } = this.props;
 
     axios.get(`http://localhost:8080/v1/queue/${queueId}/appointments`)
-      .then(({ data: appointments }) => this.setState({ appointments }))
-      .catch(error => console.log(error));
+      .then(({ data: appointments }) => {
+        console.log(appointments);
+        this.setState({ appointments });
+      })
+      .catch((error) => {
+        this.setState({ appointments: [] });
+        console.log(error);
+      });
+  }
+
+  toggleCreateSlotsModal() {
+    const { isCreateSlotsModalOpen } = this.state;
+    this.setState({ isCreateSlotsModalOpen: !isCreateSlotsModalOpen });
   }
 
   render() {
-    const { queue, appointments } = this.state;
+    const { queue, appointments, isCreateSlotsModalOpen } = this.state;
     if (!queue) return null;
 
     return (
-      <div className="my-3 mt-5">
+      <div className="my-3 mt-5" id="details">
         <div className="mb-3">
           <h2>{queue.name}</h2>
           <div>{queue.description}</div>
           <div><small className="text-muted">{queue.address} / {queue.phoneNumber}</small></div>
         </div>
 
+        <ButtonGroup className="mb-3">
+          <Button color="primary" onClick={this.toggleCreateSlotsModal}>
+            Додати слоти
+          </Button>
+        </ButtonGroup>
+
+        <CreateSlotsModal
+          queueId={queue.queueId}
+          isOpen={isCreateSlotsModalOpen}
+          onToggle={this.toggleCreateSlotsModal}
+          onSlotsCreated={() => this.fetchAppointments()}
+        />
+
         <ReactTable
           data={appointments}
           columns={[
             {
-              Header: 'Дата',
-              id: 'date',
-              accessor: a => moment(a.dateTimeTo).format('DD.MM.YYYY'),
-            },
-            {
-              Header: 'Час з',
-              id: 'timeFrom',
-              accessor: a => moment(a.dateTimeFrom).format('HH:mm'),
-            },
-            {
-              Header: 'Час до',
-              id: 'timeTo',
-              accessor: a => moment(a.dateTimeTo).format('HH:mm'),
+              Header: 'Слот',
+              columns: [
+                {
+                  Header: 'Дата',
+                  id: 'date',
+                  accessor: a => new Moment(a.dateTimeTo).format('DD.MM.YYYY'),
+                },
+                {
+                  Header: 'Час з',
+                  id: 'timeFrom',
+                  accessor: a => new Moment(a.dateTimeFrom).format('HH:mm'),
+                },
+                {
+                  Header: 'Час до',
+                  id: 'timeTo',
+                  accessor: a => new Moment(a.dateTimeTo).format('HH:mm'),
+                },
+              ],
             },
             {
               Header: 'Клієнт',
@@ -96,6 +132,10 @@ class UserQueueDetails extends Component {
                   accessor: a => a.client && a.client.email,
                 },
               ],
+            },
+            {
+              Header: 'Статус',
+              accessor: 'status',
             },
           ]}
           defaultPageSize={10}

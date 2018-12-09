@@ -82,13 +82,12 @@ const DELETE_QUEUE = {
 const CREATE_APPOINTMENTS = {
   type: 'POST',
   url: '/queue/:id/appointments',
-  req: PropTypes.arrayOf(PropTypes.shape({
-    ranges: PropTypes.arrayOf(PropTypes.shape({
+  req: PropTypes.shape({
+    slots: PropTypes.arrayOf(PropTypes.shape({
       dateTimeFrom: PropTypes.string.isRequired,
       dateTimeTo: PropTypes.string.isRequired,
-      period: PropTypes.number,
     })).isRequired,
-  })).isRequired,
+  }),
   res: PropTypes.number.isRequired, // status code
   requireCredentials: true,
 };

@@ -31,7 +31,6 @@ class CreateQueueModal extends Component {
       address: '',
       phoneNumber: '',
       photo: undefined,
-      appointments: [],
       message: undefined,
     };
   }
@@ -44,10 +43,11 @@ class CreateQueueModal extends Component {
   handleSubmit(event) {
     event.preventDefault();
 
+    const { onQueueCreated, onToggle } = this.props;
     const userContext = this.context;
 
     const {
-      name, description, address, phoneNumber, appointments,
+      name, description, address, phoneNumber,
     } = this.state;
 
     axios.post(
@@ -60,19 +60,19 @@ class CreateQueueModal extends Component {
         providerId: userContext.currentUser.userId,
       },
     )
-      .then(({ data: createdQueue }) => axios.post(
-        `http://localhost:8080/v1/queue/${createdQueue.queueId}/appointments`,
-        { ranges: appointments },
-      ))
-      .then(() => this.setState({
-        message: 'Додано',
-        name: '',
-        description: '',
-        address: '',
-        phoneNumber: '',
-        photo: undefined,
-        appointments: [],
-      }))
+      .then(() => {
+        this.setState({
+          message: 'Додано',
+          name: '',
+          description: '',
+          address: '',
+          phoneNumber: '',
+          photo: undefined,
+        });
+
+        onToggle();
+        onQueueCreated();
+      })
       .catch((error) => {
         console.log(error);
         this.setState({ message: 'Щось пішло не так' });
@@ -90,7 +90,7 @@ class CreateQueueModal extends Component {
       <Modal isOpen={isOpen} toggle={onToggle}>
         <ModalHeader toggle={this.toggle}>Створити чергу</ModalHeader>
         <ModalBody>
-          <Form onSubmit={this.handleInfoSubmit} className="mb-3">
+          <Form onSubmit={this.handleSubmit} className="mb-3">
             <InputGroup className="mb-2">
               <InputGroupAddon addonType="prepend">Назва</InputGroupAddon>
               <Input type="text" name="name" required value={name} onChange={this.handleChange} />
@@ -147,6 +147,7 @@ CreateQueueModal.defaultProps = {
 CreateQueueModal.propTypes = {
   isOpen: PropTypes.bool,
   onToggle: PropTypes.func.isRequired,
+  onQueueCreated: PropTypes.func.isRequired,
 };
 
 export default CreateQueueModal;

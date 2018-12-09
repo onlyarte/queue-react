@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 import qs from 'qs';
 
 import {
@@ -77,15 +78,16 @@ class MyQueuesPage extends Component {
         <CreateQueueModal
           isOpen={isCreateQueueModalOpen}
           onToggle={this.toggleCreateQueueModal}
+          onQueueCreated={() => this.fetchMyQueues()}
         />
 
         {queues.length > 0 && (
-          <Row className="my-3">
+          <Row className="mt-3">
             {queues.map(queue => (
-              <Col md={4} lg={3} key={queue.queueId}>
-                <Link to={`/queues?queue=${queue.queueId}`} className="clear-link">
+              <Col md={4} lg={3} className="mb-3" key={queue.queueId}>
+                <HashLink to={`/queues?queue=${queue.queueId}#details`} className="clear-link">
                   <UserQueueCard queue={queue} className="card-hovered" />
-                </Link>
+                </HashLink>
               </Col>
             ))}
           </Row>

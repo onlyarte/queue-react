@@ -48,3 +48,24 @@
 .card-hovered:hover {
   background-color: #eeeeee;
 }
+
+.calendar {
+  font-family: Montserrat, sans-serif !important;
+  /* border: none !important; */
+  border: 1px solid lightgray;
+  width: 100%;
+}
+
+.react-calendar__month-view__days__day {
+  font-size: 13px !important;
+  height: 38px !important;
+  width: 52px !important;
+}
+
+.react-calendar__tile {
+  font-size: 13px !important;
+}
+
+.react-calendar button {
+  outline: none!important;
+}
