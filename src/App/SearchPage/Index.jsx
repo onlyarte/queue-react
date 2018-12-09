@@ -111,7 +111,7 @@ class Search extends Component {
             {providers.length < 1 && <span>Людей немає</span>}
             <Row className="my-3">
               {providers.map(provider => (
-                <Col md={4} lg={3} key={provider.userId}>
+                <Col md={4} lg={3} className="mb-3" key={provider.userId}>
                   <Link to={`/users/${provider.userId}`} className="clear-link">
                     <ProviderSearchCard provider={provider} className="card-hovered" />
                   </Link>
@@ -125,7 +125,7 @@ class Search extends Component {
             {queues.length < 1 && <span>Черг немає</span>}
             <Row className="my-3">
               {queues.map(queue => (
-                <Col md={4} lg={3} key={queue.queueId}>
+                <Col md={4} lg={3} className="mb-3" key={queue.queueId}>
                   <Link to={`/queues/${queue.queueId}`} className="clear-link">
                     <QueueSearchCard queue={queue} className="card-hovered" />
                   </Link>

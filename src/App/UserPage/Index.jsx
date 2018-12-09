@@ -88,7 +88,7 @@ class UserPage extends Component {
             {queues.length > 0 && (
               <Row className="my-3">
                 {queues.map(queue => (
-                  <Col md={6} lg={4} key={queue.queueId}>
+                  <Col md={6} lg={4} className="mb-3" key={queue.queueId}>
                     <Link to={`/queues/${queue.queueId}`} className="clear-link">
                       <UserQueueCard queue={queue} className="card-hovered" />
                     </Link>
