@@ -54,7 +54,7 @@ class CreateSlotsModal extends Component {
       const startDateTime = Moment({
         year: date.year(),
         month: date.month(),
-        day: date.day(),
+        day: date.date(),
         hour: timeFrom.substring(0, 2),
         minute: timeFrom.substring(3),
       });
@@ -62,7 +62,7 @@ class CreateSlotsModal extends Component {
       const endDateTime = Moment({
         year: date.year(),
         month: date.month(),
-        day: date.day(),
+        day: date.date(),
         hour: timeTo.substring(0, 2),
         minute: timeTo.substring(3),
       });
