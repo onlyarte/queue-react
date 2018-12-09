@@ -11,16 +11,9 @@ function QueueSearchCard({ queue, className }) {
       <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txtclr=ffffff&txt=Без фото&w=500&h=300&bg=364681" alt="Card image cap" />
       <CardBody>
         <CardTitle>{queue.name}</CardTitle>
-
-        <CardSubtitle className="text-muted mb-2">
-          <small>{queue.address}</small>
-        </CardSubtitle>
-
-        <CardSubtitle className="text-muted mb-2">
-          <small>{queue.phoneNumber}</small>
-        </CardSubtitle>
-
-        <CardText style={{ lineHeight: 1.2 }}>{queue.description}</CardText>
+        <CardText style={{ lineHeight: 1.2 }}>
+          <small>{queue.description}</small>
+        </CardText>
       </CardBody>
     </Card>
   );

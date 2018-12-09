@@ -58,9 +58,9 @@ class App extends Component {
             <Header onUserSettingsOpen={this.toggleUserSettings} />
 
             <main className="main-content">
-              <Route exact path="/" component={HomePage} />
-              <Route path="/search" component={SearchPage} />
-              {/* <Route path="/queues" component={MyQueuesPage} /> */}
+              <Route path="/" exact component={HomePage} />
+              <Route path="/search" exact component={SearchPage} />
+              <Route path="/queues" exact component={MyQueuesPage} />
               {/* <Route path="/appointments" component={MyAppointmentsPage} /> */}
               <Route path="/users/:userId" component={UserPage} />
             </main>

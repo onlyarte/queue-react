@@ -9,7 +9,7 @@ import {
 import UserInfoCard from './UserInfoCard';
 import UserQueueCard from './UserQueueCard';
 
-class User extends Component {
+class UserPage extends Component {
   constructor(props) {
     super(props);
 
@@ -103,4 +103,4 @@ class User extends Component {
   }
 }
 
-export default User;
+export default UserPage;
