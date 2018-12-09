@@ -1,14 +1,9 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import moment from 'moment';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-
-function getDate(dateString) {
-  const date = new Date(dateString);
-  return `${date.getHours()}:${date.getMinutes()}`;
-}
 
 class UserQueueDetails extends Component {
   constructor(props) {
@@ -46,6 +41,7 @@ class UserQueueDetails extends Component {
 
   fetchAppointments() {
     const { queueId } = this.props;
+
     axios.get(`http://localhost:8080/v1/queue/${queueId}/appointments`)
       .then(({ data: appointments }) => this.setState({ appointments }))
       .catch(error => console.log(error));
@@ -56,9 +52,9 @@ class UserQueueDetails extends Component {
     if (!queue) return null;
 
     return (
-      <Fragment>
+      <div className="my-3 mt-5">
         <div className="mb-3">
-          <h3>{queue.name}</h3>
+          <h2>{queue.name}</h2>
           <div>{queue.description}</div>
           <div><small className="text-muted">{queue.address} / {queue.phoneNumber}</small></div>
         </div>
@@ -85,18 +81,18 @@ class UserQueueDetails extends Component {
               Header: 'Клієнт',
               columns: [
                 {
-                  Header: "Ім'я",
-                  id: "name",
+                  Header: 'Ім\'я',
+                  id: 'name',
                   accessor: a => a.client && a.client.name,
                 },
                 {
-                  Header: "Телефон",
-                  id: "phoneNumber",
+                  Header: 'Телефон',
+                  id: 'phoneNumber',
                   accessor: a => a.client && a.client.phoneNumber,
                 },
                 {
-                  Header: "Пошта",
-                  id: "email",
+                  Header: 'Пошта',
+                  id: 'email',
                   accessor: a => a.client && a.client.email,
                 },
               ],
@@ -106,7 +102,7 @@ class UserQueueDetails extends Component {
           className="-striped -highlight"
           filterable
         />
-      </Fragment>
+      </div>
     );
   }
 }

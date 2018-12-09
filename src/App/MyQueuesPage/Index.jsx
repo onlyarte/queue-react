@@ -11,16 +11,19 @@ import UserQueueCard from './UserQueueCard';
 import UserQueueDetails from './UserQueueDetails';
 
 import UserContext from '../UserContext';
+import CreateQueueModal from './CreateQueueModal';
 
 class MyQueuesPage extends Component {
   constructor(props) {
     super(props);
 
     this.fetchMyQueues = this.fetchMyQueues.bind(this);
+    this.toggleCreateQueueModal = this.toggleCreateQueueModal.bind(this);
 
     this.state = {
       loading: false,
       queues: [],
+      isCreateQueueModalOpen: false,
     };
   }
 
@@ -38,8 +41,13 @@ class MyQueuesPage extends Component {
       .catch(error => console.log(error));
   }
 
+  toggleCreateQueueModal() {
+    const { isCreateQueueModalOpen } = this.state;
+    this.setState({ isCreateQueueModalOpen: !isCreateQueueModalOpen });
+  }
+
   render() {
-    const { queues, loading } = this.state;
+    const { queues, loading, isCreateQueueModalOpen } = this.state;
 
     const { search: queryString } = this.props.location;
     const { queue: activeQueueId = null } = qs.parse(queryString.substring(1));
@@ -61,8 +69,15 @@ class MyQueuesPage extends Component {
         <h3>
           Мої черги
           {' '}
-          <Button color="primary">Додати</Button>
+          <Button color="primary" onClick={this.toggleCreateQueueModal}>
+            Додати
+          </Button>
         </h3>
+
+        <CreateQueueModal
+          isOpen={isCreateQueueModalOpen}
+          onToggle={this.toggleCreateQueueModal}
+        />
 
         {queues.length > 0 && (
           <Row className="my-3">

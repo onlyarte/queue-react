@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Header from './Header';
 
@@ -58,11 +58,15 @@ class App extends Component {
             <Header onUserSettingsOpen={this.toggleUserSettings} />
 
             <main className="main-content">
-              <Route path="/" exact component={HomePage} />
-              <Route path="/search" exact component={SearchPage} />
-              <Route path="/queues" exact component={MyQueuesPage} />
-              {/* <Route path="/appointments" component={MyAppointmentsPage} /> */}
-              <Route path="/users/:userId" component={UserPage} />
+              <Switch>
+                <Route path="/" exact component={HomePage} />
+                <Route path="/search" exact component={SearchPage} />
+                {user && (
+                  <Route path="/queues" exact component={MyQueuesPage} />
+                )}
+                {/* <Route path="/appointments" component={MyAppointmentsPage} /> */}
+                <Route path="/users/:userId" component={UserPage} />
+              </Switch>
             </main>
 
             {user && (
