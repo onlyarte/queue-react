@@ -18,9 +18,13 @@ import {
 } from 'reactstrap';
 
 import Octicon, {
-  Person as PersonIcon,
+  Squirrel as PersonIcon,
   SignIn as SignInIcon,
+  SignOut as SignOutIcon,
+  Tools as ToolsIcon,
 } from '@githubprimer/octicons-react';
+
+import UserContext from './UserContext';
 
 class Header extends Component {
   constructor(props) {
@@ -39,7 +43,8 @@ class Header extends Component {
   }
 
   render() {
-    const { user } = this.props;
+    const { onUserSettingsOpen } = this.props;
+    const userContext = this.context;
     const { isOpen } = this.state;
 
     return (
@@ -51,7 +56,7 @@ class Header extends Component {
             <NavItem>
               <NavLink tag={HashLink} to="/#search">Шукати</NavLink>
             </NavItem>
-            {user && (
+            {userContext.currentUser && (
               <Fragment>
                 <NavItem>
                   <NavLink tag={Link} to="/queues">Мої черги</NavLink>
@@ -63,52 +68,52 @@ class Header extends Component {
             )}
           </Nav>
 
-          {user && (
-            <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle nav caret>
-                <Octicon><PersonIcon x={10} /></Octicon>
-                {' '}
-                {user.name}
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem>
-                  Налаштування
-                </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>
-                  ВИЙТИ
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
+          {userContext.currentUser && (
+            <Nav navbar>
+              <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret>
+                  <Octicon><PersonIcon x={10} /></Octicon>
+                  {' '}
+                  {userContext.currentUser.name}
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem onClick={onUserSettingsOpen}>
+                    <Octicon><ToolsIcon x={10} /></Octicon>
+                    {' '}
+                    Налаштування
+                  </DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem onClick={() => userContext.unset()}>
+                    <Octicon><SignOutIcon x={10} /></Octicon>
+                    {' '}
+                    Вийти
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
+            </Nav>
           )}
 
-          <Nav navbar>
-            <NavItem>
-              <NavLink tag={HashLink} to="/#login">
-                <Octicon><SignInIcon x={10} /></Octicon>
-                {' '}
-                УВІЙТИ
-              </NavLink>
-            </NavItem>
-          </Nav>
+          {!userContext.currentUser && (
+            <Nav navbar>
+              <NavItem>
+                <NavLink tag={HashLink} to="/#login">
+                  <Octicon><SignInIcon x={10} /></Octicon>
+                  {' '}
+                  Увійти
+                </NavLink>
+              </NavItem>
+            </Nav>
+          )}
         </Collapse>
       </Navbar>
     );
   }
 }
 
-Header.defaultProps = {
-  user: undefined,
-};
+Header.contextType = UserContext;
 
 Header.propTypes = {
-  user: PropTypes.shape({
-    userId: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    phoneNumber: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    photo: PropTypes.string.isRequired,
-  }),
+  onUserSettingsOpen: PropTypes.func.isRequired,
 };
 
 export default Header;

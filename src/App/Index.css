@@ -1,0 +1,50 @@
+.main-content {
+  margin-top: 56px;
+}
+
+.search-pane {
+  position: relative;
+  overflow: hidden;
+  background-color: white;
+}
+
+.search-pane,
+.search-pane-front {
+  height: 95vh;
+  width: 100vw;
+}
+
+.search-pane-back {
+  position: absolute;
+  top: -5vh;
+  left: -2.5vw;
+  width: 105vw;
+  height: 110vh;
+  filter: blur(10px);
+  background-size: cover;
+  background-position: center center;
+  opacity: 0.3;
+  background-image: url('/images/hp-background-2.jpg')
+}
+
+.search-pane-front {
+  position: absolute;
+  z-index: 1;
+}
+
+.text-poiret {
+  font-family: 'Poiret One', cursive;
+}
+
+.clear-link:hover,
+.clear-link:visited,
+.clear-link:link,
+.clear-link:active
+{
+  color: inherit;
+  text-decoration: none;
+}
+
+.card-hovered:hover {
+  background-color: #eeeeee;
+}

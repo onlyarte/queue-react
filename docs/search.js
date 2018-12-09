@@ -9,7 +9,7 @@ const SEARCH_BY_QUEUE = {
   },
   res: PropTypes.arrayOf(PropTypes.shape({
     queueId: PropTypes.string.isRequired,
-    prividerId: PropTypes.string.isRequired,
+    providerId: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     address: PropTypes.string.isRequired,
