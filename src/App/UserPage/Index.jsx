@@ -35,7 +35,10 @@ class UserPage extends Component {
 
     axios.get(`http://localhost:8080/v1/user/${userId}`)
       .then(({ data: user }) => this.setState({ user, loading: false }))
-      .catch(error => console.log(error));
+      .catch((error) => {
+        this.setState({ loading: false });
+        console.log(error);
+      });
   }
 
   fetchUserQueues() {

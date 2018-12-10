@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText,
+  Card, CardImg, CardBody, CardTitle, CardText,
 } from 'reactstrap';
 
-function QueueSearchCard({ queue, className }) {
+function UserQueueCard({ queue, className }) {
   return (
     <Card className={className}>
       <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txtclr=ffffff&txt=Без фото&w=500&h=300&bg=364681" alt="Card image cap" />
@@ -19,11 +19,11 @@ function QueueSearchCard({ queue, className }) {
   );
 }
 
-QueueSearchCard.defaultProps = {
+UserQueueCard.defaultProps = {
   className: '',
 };
 
-QueueSearchCard.propTypes = {
+UserQueueCard.propTypes = {
   queue: PropTypes.shape({
     name: PropTypes.string.isRequired,
     address: PropTypes.string.isRequired,
@@ -33,4 +33,4 @@ QueueSearchCard.propTypes = {
   className: PropTypes.string,
 };
 
-export default QueueSearchCard;
+export default UserQueueCard;

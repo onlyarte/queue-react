@@ -85,7 +85,7 @@ class CreateSlotsModal extends Component {
 
     axios.post(
       `http://localhost:8080/v1/queue/${queueId}/appointments`,
-      { ranges: slots },
+      slots,
     )
       .then(() => {
         this.setState({

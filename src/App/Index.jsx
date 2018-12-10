@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router, Route, Switch,
+} from 'react-router-dom';
 
 import Header from './Header';
 
@@ -27,13 +29,12 @@ class App extends Component {
     this.toggleUserSettings = this.toggleUserSettings.bind(this);
 
     this.state = {
-      user: {"userId":"ruslan","name":"Lan Rii","phoneNumber":"380687117334","email":"ruslanpurii@gmail.com","password":"ruslan16","address":"Київ, Україна"},
+      user: undefined,
       showUserSettings: false,
     };
   }
 
   handleUser(user) {
-    console.log(user);
     this.setState({ user });
   }
 
@@ -61,11 +62,11 @@ class App extends Component {
               <Switch>
                 <Route path="/" exact component={HomePage} />
                 <Route path="/search" exact component={SearchPage} />
-                {user && (
-                  <Route path="/queues" exact component={MyQueuesPage} />
-                )}
-                {/* <Route path="/appointments" component={MyAppointmentsPage} /> */}
                 <Route path="/users/:userId" component={UserPage} />
+                <Route path="/queues/:queueId" component={QueuePage} />
+                {user && (<Route path="/queues" exact component={MyQueuesPage} />)}
+                {user && (<Route path="/appointments" exact component={MyAppointmentsPage} />)}
+                <Route component={HomePage} />
               </Switch>
             </main>
 

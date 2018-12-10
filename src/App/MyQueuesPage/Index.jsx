@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import qs from 'qs';
 
@@ -80,6 +79,10 @@ class MyQueuesPage extends Component {
           onToggle={this.toggleCreateQueueModal}
           onQueueCreated={() => this.fetchMyQueues()}
         />
+
+        {queues.length === 0 && (
+          <span>Ви не створили жодної черги</span>
+        )}
 
         {queues.length > 0 && (
           <Row className="mt-3">

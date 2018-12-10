@@ -69,3 +69,8 @@
 .react-calendar button {
   outline: none!important;
 }
+
+.queue-page-calendar {
+  max-width: 350px;
+  border: none !important;
+}
