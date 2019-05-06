@@ -86,7 +86,6 @@ class Search extends Component {
                 Ми нічого не знайшли
                 {query && ` за запитом ${query}`}
                 {location && ` в ${location}`}
-                ((
               </h5>
             </Col>
           </Row>

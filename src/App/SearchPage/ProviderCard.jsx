@@ -8,7 +8,7 @@ import {
 function ProviderSearchCard({ provider, className }) {
   return (
     <Card className={className}>
-      <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Без фото&txtclr=ffffff&w=400&h=300&bg=354651" alt="Card image cap" />
+      <CardImg top width="100%" src="https://via.placeholder.com/400x300.png?text=Без фото" alt="Card image cap" />
       <CardBody>
         <CardTitle>{provider.name}</CardTitle>
 

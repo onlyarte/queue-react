@@ -11,7 +11,7 @@ function UserInfoCard({ user }) {
       <CardImg
         top
         width="100%"
-        src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Без фото&txtclr=ffffff&w=600&h=400&bg=354651"
+        src="https://via.placeholder.com/600x400.png?text=Без фото"
         alt="User image"
       />
 

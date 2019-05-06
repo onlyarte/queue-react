@@ -86,7 +86,7 @@ class MyQueuesPage extends Component {
         )}
         {futureAppointments.length > 0 && (
           <Row className="mt-3">
-            {appointments.map(appointment => (
+            {futureAppointments.map(appointment => (
               <Col md={4} lg={3} className="mb-3" key={appointment.appointmentId}>
                 <HashLink to={`/queues/${appointment.queue.queueId}`} className="clear-link">
                   <AppointmentCard appointment={appointment} className="card-hovered" />
@@ -97,6 +97,7 @@ class MyQueuesPage extends Component {
         )}
 
         <br />
+        <br />
 
         <h4>Минулі</h4>
         {pastAppointments.length === 0 && (
@@ -104,9 +105,9 @@ class MyQueuesPage extends Component {
         )}
         {pastAppointments.length > 0 && (
           <Row className="mt-3">
-            {appointments.map(appointment => (
+            {pastAppointments.map(appointment => (
               <Col md={4} lg={3} className="mb-3" key={appointment.appointmentId}>
-                <HashLink to={`/queues/${appointment.appointmentId}`} className="clear-link">
+                <HashLink to={`/queues/${appointment.queue.queueId}`} className="clear-link">
                   <AppointmentCard appointment={appointment} className="card-hovered" />
                 </HashLink>
               </Col>

@@ -8,7 +8,7 @@ import {
 function QueueSearchCard({ queue, className }) {
   return (
     <Card className={className}>
-      <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txtclr=ffffff&txt=Без фото&w=400&h=300&bg=364681" alt="Card image cap" />
+      <CardImg top width="100%" src="https://via.placeholder.com/400x300.png?text=Без фото" alt="Card image cap" />
       <CardBody>
         <CardTitle>{queue.name}</CardTitle>
 

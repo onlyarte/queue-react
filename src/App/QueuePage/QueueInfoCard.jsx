@@ -11,8 +11,8 @@ function QueueInfoCard({ queue }) {
       <CardImg
         top
         width="100%"
-        src="https://placeholdit.imgix.net/~text?txtsize=33&txtclr=ffffff&txt=Без фото&w=500&h=300&bg=364681"
-        alt="User image"
+        src="https://via.placeholder.com/500x300.png?text=Без фото"
+        alt="Queue image"
       />
 
       <CardBody>
